@@ -1,0 +1,255 @@
+/* css/style.css */
+
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #f8f9fa;
+    --background-color: #ffffff;
+    --text-color: #333;
+    --light-text-color: #f1f1f1;
+    --border-color: #dee2e6;
+    --disabled-color: #6c757d;
+    --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background-image: url('../img/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.screen {
+    width: 100%;
+    max-width: 420px;
+    height: 85vh;
+    max-height: 800px;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    display: none;
+    flex-direction: column;
+}
+
+.screen.active {
+    display: flex;
+}
+
+/* --- キャラクター選択画面 --- */
+#character-selection-screen header {
+    padding: 20px 20px 10px 20px;
+    text-align: center;
+}
+
+#character-selection-screen h1 {
+    margin: 0;
+    font-size: 1.8em;
+    color: var(--primary-color);
+}
+
+#character-selection-screen p {
+    margin: 5px 0 0;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.view-switcher {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    background-color: #e9ecef;
+    margin: 10px 20px;
+    border-radius: 10px;
+}
+.view-btn {
+    background-color: transparent;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 7px;
+    color: #6c757d;
+    transition: all 0.3s ease;
+}
+.view-btn.active {
+    background-color: var(--background-color);
+    color: var(--primary-color);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.view-btn:not(.active):hover {
+    background-color: #dee2e6;
+}
+
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    padding: 5px 15px 15px 15px;
+    gap: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.tab-button {
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid var(--primary-color);
+    background-color: transparent;
+    color: var(--primary-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tab-button.active, .tab-button:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.character-display-area {
+    flex-grow: 1;
+    position: relative;
+    overflow-y: auto;
+}
+
+.character-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    padding: 15px;
+}
+
+.character-card {
+    background-color: var(--background-color);
+    border-radius: 15px;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.character-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.character-card img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--primary-color);
+}
+
+.character-card h3 { margin: 10px 0 5px; font-size: 1.1em; }
+.character-card p { margin: 0; font-size: 0.8em; color: #777; }
+
+/* マップ表示スタイル */
+.character-map-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+.map-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.map-pin {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 0 5px black;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+.map-pin:hover {
+    transform: translate(-50%, -50%) scale(1.5);
+    z-index: 10;
+}
+.map-tooltip {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transform: translate(-50%, -120%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: 20;
+    white-space: nowrap;
+}
+.map-tooltip img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.map-tooltip.visible {
+    opacity: 1;
+}
+
+/* ★ 古い表示切替ロジックを削除し、.hiddenクラスのみ使用 */
+.hidden {
+    display: none !important;
+}
+
+
+/* --- 会話画面 --- */
+.conversation-header {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: var(--secondary-color);
+    border-bottom: 1px solid var(--border-color);
+}
+.back-button {
+    background: none; border: none; font-size: 1.5em; cursor: pointer;
+    color: var(--primary-color); padding: 0 10px 0 0;
+}
+.partner-info { display: flex; align-items: center; gap: 10px; }
+#partner-avatar { width: 40px; height: 40px; border-radius: 50%; }
+#partner-name { margin: 0; font-size: 1.2em; }
+.chat-log { flex-grow: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
+.chat-message { padding: 10px 15px; border-radius: 18px; max-width: 75%; line-height: 1.4; word-wrap: break-word; }
+.user-message { background-color: var(--primary-color); color: var(--light-text-color); align-self: flex-end; border-bottom-right-radius: 4px; }
+.ai-message { background-color: var(--secondary-color); color: var(--text-color); align-self: flex-start; border-bottom-left-radius: 4px; }
+.chat-input-area { display: flex; align-items: center; padding: 10px 15px; border-top: 1px solid var(--border-color); background-color: var(--secondary-color); gap: 10px; transition: background-color 0.3s ease; }
+.input-toggle-button { background: none; border: 1px solid var(--border-color); border-radius: 50%; width: 44px; height: 44px; cursor: pointer; flex-shrink: 0; display: flex; justify-content: center; align-items: center; color: var(--text-color); }
+.input-toggle-button:hover { background-color: #e9ecef; }
+.text-input-group { display: flex; flex-grow: 1; gap: 10px; }
+#user-input { flex-grow: 1; border: 1px solid var(--border-color); border-radius: 20px; padding: 10px 15px; font-size: 1em; }
+#user-input:focus { outline: none; border-color: var(--primary-color); }
+#send-button { background-color: var(--primary-color); border: none; border-radius: 50%; width: 44px; height: 44px; cursor: pointer; display: flex; justify-content: center; align-items: center; color: white; flex-shrink: 0; }
+.mic-input-group { display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1; }
+#mic-button { background-color: var(--primary-color); border: none; border-radius: 50%; width: 60px; height: 60px; cursor: pointer; display: flex; justify-content: center; align-items: center; color: white; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4); }
+#mic-button.listening { background-color: #dc3545; box-shadow: 0 0 15px 5px rgba(220, 53, 69, 0.5); animation: pulse 1.5s infinite; }
+#mic-button.disabled { background-color: var(--disabled-color); cursor: not-allowed; box-shadow: none; }
+.mic-status { margin: 5px 0 0; font-size: 0.8em; color: #666; height: 1.1em; text-align: center; min-width: 150px; }
+@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+.mode-voice .text-input-group, .mode-voice .icon-mic, .mode-text .mic-input-group, .mode-text .icon-keyboard { display: none; }
+.mode-voice .mic-input-group, .mode-text .text-input-group { display: flex; }
+.mode-voice { background-color: #f8f9fa; }
+.mode-text { background-color: #f0f2f5; }
+.loading-indicator { padding: 15px; }
+.dot-flashing { position: relative; width: 10px; height: 10px; border-radius: 5px; background-color: #9880ff; color: #9880ff; animation: dotFlashing 1s infinite linear alternate; animation-delay: .5s; }
+.dot-flashing::before, .dot-flashing::after { content: ''; display: inline-block; position: absolute; top: 0; }
+.dot-flashing::before { left: -15px; width: 10px; height: 10px; border-radius: 5px; background-color: #9880ff; color: #9880ff; animation: dotFlashing 1s infinite alternate; animation-delay: 0s; }
+.dot-flashing::after { left: 15px; width: 10px; height: 10px; border-radius: 5px; background-color: #9880ff; color: #9880ff; animation: dotFlashing 1s infinite alternate; animation-delay: 1s; }
+@keyframes dotFlashing { 0% { background-color: #9880ff; } 50%, 100% { background-color: #d7d2f3; } }
